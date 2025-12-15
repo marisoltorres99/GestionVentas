@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace GestionVentas.Model
+﻿namespace GestionVentas.Model
 {
     public class Cliente
     {
