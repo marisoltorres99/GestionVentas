@@ -35,5 +35,19 @@ public class Program()
             Console.WriteLine($"Categoria: {item.Categoria}");
             Console.WriteLine();
         }
+
+        var rankingDeClientes = consultas.ObtenerRankingClientes(clientes, ventas);
+        
+        Console.WriteLine("Ranking de monto de ventas de clientes: ");
+        foreach (var item in rankingDeClientes)
+        {
+            Console.WriteLine("----- Cliente -----");
+            Console.WriteLine($"Nombre: {item.NombreCliente}");
+            Console.WriteLine($"Email: {item.Email}");
+            Console.WriteLine($"Categoria: {item.Categoria}");
+            Console.WriteLine($"Total Ventas del Mes: {item.CantidadVentas}");
+            Console.WriteLine($"Total Facturado: ${item.TotalVendido}");
+            Console.WriteLine();
+        }
     }
 }

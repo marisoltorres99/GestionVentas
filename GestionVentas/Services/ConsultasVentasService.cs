@@ -36,5 +36,23 @@ namespace GestionVentas.Services
                                              select c;
             return clientesSinVentasMesActual.ToList();
         }
+
+        public List<VentasPorClienteDTO> ObtenerRankingClientes(List<Cliente> clientes, List<Venta> ventas)
+        {
+            var rankingVentasClientes = from c in clientes
+                                        join v in ventas on c.IdCliente equals v.IdCliente
+                                        where (v.Fecha.Month == DateTime.Now.Month) && (v.Fecha.Year == DateTime.Now.Year)
+                                        group v by new { c.Nombre, c.Email, c.Categoria, c.IdCliente } into grupo
+                                        orderby grupo.Sum(v => v.Monto) descending
+                                        select new VentasPorClienteDTO
+                                        {
+                                            NombreCliente = grupo.Key.Nombre,
+                                            Email = grupo.Key.Email,
+                                            Categoria = grupo.Key.Categoria,
+                                            TotalVendido = grupo.Sum(v => v.Monto),
+                                            CantidadVentas = grupo.Count()
+                                        };
+            return rankingVentasClientes.Take(3).ToList();
+        }
     }
 }
