@@ -12,6 +12,7 @@ public class Program()
         var consultas = new ConsultasVentasService();
         var ventasMesAnioActual = consultas.ObtenerVentasMesAnioActual(clientes, ventas);
 
+        Console.WriteLine("Ventas en el mes y anio actual: ");
         foreach (var item in ventasMesAnioActual)
         {
             Console.WriteLine("----- Cliente -----");
@@ -20,6 +21,18 @@ public class Program()
             Console.WriteLine($"Categoria: {item.Categoria}");
             Console.WriteLine($"Total Ventas del Mes: {item.CantidadVentas}");
             Console.WriteLine($"Total Facturado: ${item.TotalVendido}");
+            Console.WriteLine();
+        }
+
+        var clientesSinVentasMesActual = consultas.ObtenerClientesSinVentasEnElMesActual(clientes, ventas);
+
+        Console.WriteLine("Clientes sin ventas en el mes y anio actual: ");
+        foreach (var item in clientesSinVentasMesActual)
+        {
+            Console.WriteLine("----- Cliente -----");
+            Console.WriteLine($"Nombre: {item.Nombre}");
+            Console.WriteLine($"Email: {item.Email}");
+            Console.WriteLine($"Categoria: {item.Categoria}");
             Console.WriteLine();
         }
     }

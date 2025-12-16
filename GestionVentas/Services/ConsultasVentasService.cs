@@ -19,5 +19,22 @@ namespace GestionVentas.Services
                                   };
             return ventasMesAnioActual.ToList();
         }
+
+        public List<Cliente> ObtenerClientesSinVentasEnElMesActual(List<Cliente> clientes, List<Venta> ventas)
+        {
+            var ventasMesActual = from v in ventas
+                                  where (v.Fecha.Month == DateTime.Now.Month) && (v.Fecha.Year == DateTime.Now.Year)
+                                  select new Venta
+                                  {
+                                      IdCliente = v.IdCliente,
+                                      Fecha = v.Fecha,
+                                  };
+
+            var clientesSinVentasMesActual = from c in clientes
+                                             join v in ventasMesActual on c.IdCliente equals v.IdCliente into ventasCliente
+                                             where !ventasCliente.Any()
+                                             select c;
+            return clientesSinVentasMesActual.ToList();
+        }
     }
 }
