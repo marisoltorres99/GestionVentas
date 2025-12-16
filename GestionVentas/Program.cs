@@ -49,5 +49,15 @@ public class Program()
             Console.WriteLine($"Total Facturado: ${item.TotalVendido}");
             Console.WriteLine();
         }
+
+        var facturacionPorCategoria = consultas.ObtenerTotalFacturadoPorCategoria(clientes, ventas);
+
+        Console.WriteLine("Facturacion del mes actual por categoria: ");
+        foreach (var item in facturacionPorCategoria)
+        {
+            Console.WriteLine($"Nombre: {item.Categoria}");
+            Console.WriteLine($"Total Facturado: ${item.MontoTotalPorCategoria}");
+            Console.WriteLine();
+        }
     }
 }

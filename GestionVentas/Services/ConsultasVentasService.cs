@@ -54,5 +54,19 @@ namespace GestionVentas.Services
                                         };
             return rankingVentasClientes.Take(3).ToList();
         }
+
+        public List<FacturacionPorCategoriaDTO> ObtenerTotalFacturadoPorCategoria(List<Cliente> clientes, List<Venta> ventas)
+        {
+            var facturacionPorCategoria = from c in clientes
+                                          join v in ventas on c.IdCliente equals v.IdCliente
+                                          where (v.Fecha.Month == DateTime.Now.Month) && (v.Fecha.Year == DateTime.Now.Year)
+                                          group v by new { c.Categoria } into grupo
+                                          select new FacturacionPorCategoriaDTO
+                                          {
+                                              Categoria = grupo.Key.Categoria,
+                                              MontoTotalPorCategoria = grupo.Sum(v => v.Monto)
+                                          };
+            return facturacionPorCategoria.ToList();
+        } 
     }
 }
