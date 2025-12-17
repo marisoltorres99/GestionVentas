@@ -59,5 +59,13 @@ public class Program()
             Console.WriteLine($"Total Facturado: ${item.MontoTotalPorCategoria}");
             Console.WriteLine();
         }
+
+        var clienteVentaMasAlta = consultas.ObtenerClienteConVentaMasAlta(clientes, ventas);
+
+        Console.WriteLine("Cliente con venta mas alta: ");
+        Console.WriteLine($"Nombre: {clienteVentaMasAlta.NombreCliente}");
+        Console.WriteLine($"Fecha de la venta: {clienteVentaMasAlta.FechaVenta}");
+        Console.WriteLine($"Monto de la venta: {clienteVentaMasAlta.MontoVenta}");
+        Console.WriteLine();
     }
 }

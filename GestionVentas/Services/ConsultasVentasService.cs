@@ -67,6 +67,21 @@ namespace GestionVentas.Services
                                               MontoTotalPorCategoria = grupo.Sum(v => v.Monto)
                                           };
             return facturacionPorCategoria.ToList();
-        } 
+        }
+        
+        public ClienteConVentaMasAltaDTO ObtenerClienteConVentaMasAlta(List<Cliente> clientes, List<Venta> ventas)
+        {
+            var clienteVentaMasAlta = from v in ventas
+                                      join c in clientes on v.IdCliente equals c.IdCliente
+                                      where (v.Fecha.Month == DateTime.Now.Month) && (v.Fecha.Year == DateTime.Now.Year)
+                                      orderby v.Monto descending
+                                      select new ClienteConVentaMasAltaDTO
+                                      {
+                                          NombreCliente = c.Nombre,
+                                          FechaVenta = v.Fecha,
+                                          MontoVenta = v.Monto
+                                      };
+            return clienteVentaMasAlta.FirstOrDefault();
+        }
     }
 }
